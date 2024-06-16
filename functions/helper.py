@@ -44,8 +44,8 @@ def merge_files(foldername):
     
     df_list = []
 
-    for c in os.listdir(f'./{foldername}'):
-        df = pd.read_csv(f'./{foldername}/'+c)
+    for c in os.listdir(f'{foldername}'):
+        df = pd.read_csv(f'{foldername}/'+c)
         df_list.append(df)
 
     return pd.concat(df_list)
