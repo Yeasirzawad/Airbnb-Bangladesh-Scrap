@@ -180,7 +180,7 @@ def scrap_airbnb_listing(location_list,xpath_filename):
     return pd.DataFrame(total_dict)
 
 
-def scrap_host(host_links:pd.Series,xpath_filename:str):
+def scrap_host(host_links:pd.Series,xpath_filename:str,start):
 
     xpaths = load_json(xpath_filename)
    
@@ -300,9 +300,6 @@ def scrap_host(host_links:pd.Series,xpath_filename:str):
         k += 1
 
 
-<<<<<<< HEAD
-def airbnb_data_scrap(listing_links,locations,xpath_filename,start):
-=======
 def scrape_review(url):
     driver = webdriver.Chrome()
     driver.maximize_window()
@@ -385,7 +382,6 @@ def scrape_review(url):
     
 
 def airbnb_data_scrap(listing_links,locations,xpath_filename):
->>>>>>> 2da9140d206d786962b84ba550f8ebf5f6e1c696
     total_dict = []
     xpaths_dict = load_json(xpath_filename)
    
