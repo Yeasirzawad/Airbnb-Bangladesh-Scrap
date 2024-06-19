@@ -187,7 +187,7 @@ def scrap_host(host_links:pd.Series,xpath_filename:str,start):
     total_host = []
     driver = webdriver.Chrome()
     driver.maximize_window()
-    j = 0
+    j = start
     k = 1
 
     for host_link in host_links:
