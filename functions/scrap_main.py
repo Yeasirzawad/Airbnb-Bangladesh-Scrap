@@ -15,8 +15,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
-from helper import result_count_maker
-from helper import load_json
+from notebooks.helper import result_count_maker
+from notebooks.helper import load_json
 
 
 def scrape_review(url):
