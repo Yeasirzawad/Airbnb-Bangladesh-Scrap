@@ -8,7 +8,7 @@ import re
 import pandas as pd
 import numpy as np
 import re
-from helper import convert_to_months, extract_lat_lng, get_base_url, clean_facilities
+from helper import convert_to_months, extract_lat_lng, get_base_url, remove_unavailable
 
 mapping = {
     "hdtv": "tv",
@@ -28,7 +28,6 @@ mapping = {
     "fireplace": "fireplace",
     "refrigerator": "refrigerator",
     "air conditioning": "air conditioning",
-    "fridge": "fridge",
     "pool": "pool",
     "gym": "gym",
     "housekeeping": "housekeeping",
@@ -49,7 +48,8 @@ mapping = {
     "game console": "game console",
     "smoke alarm": "smoke alarm",
     "fire alarm": "fire alarm",
-    "fire extinguisher": "fire extinguisher"
+    "fire extinguisher": "fire extinguisher",
+    "view":"view"
 }
 
 def clean_airbnb_(filename):
@@ -137,32 +137,20 @@ def clean_airbnb_(filename):
     if 'google_map_location_link' in df.columns:
         df[['latitude', 'longitude']] = df['google_map_location_link'].apply(lambda x: pd.Series(extract_lat_lng(x)))
 
-    # Apply clean_facilities function to 'facilities' column
-    df['cleaned_facilities'] = df['facilities'].apply(clean_facilities)
+   
 
-    # Create a set of unique facilities from the mapping values
-    unique_facilities = list(set(mapping.values()))
+    # Apply the function to the 'facilities' column
+    df['facilities'] = df['facilities'].apply(remove_unavailable)
+    unique_facilities_list = list(mapping.keys())
+   
+    for f in unique_facilities_list:
+        df[f] = 0
+        df.loc[df['facilities'].str.contains(f, case=False, na=False, regex=True),f] = 1
+ 
+    unique_facilities_list.insert(0,'base_urls')
+    unique_facilities_list.insert(1,'facilities')
 
-    # Initialize facilities_df with zeros for each unique facility
-    facilities_df = pd.DataFrame(0, index=df.index, columns=unique_facilities)
-
-    # Iterate through each row in the DataFrame to map and filter facilities
-    for idx, row in df.iterrows():
-        # Check if cleaned_facilities is not NaN
-            for facility in row['cleaned_facilities']:
-                facility_lower = facility.lower()
-                if facility_lower in mapping:
-                    mapped_facility = mapping[facility_lower]
-                    facilities_df.loc[idx, mapped_facility] = 1
-
-    # Concatenate the original DataFrame with the new facilities DataFrame
-    result_df = pd.concat([df, facilities_df], axis=1)
-
-      
-    unique_facilities.insert(0,'base_urls')
-    unique_facilities.insert(1,'facilities')
-
-    facilities_df = result_df[unique_facilities]
+    facilities_df = df[unique_facilities_list]
     
     # Process host_confirmed_information
     if 'host_confirmed_information' in df.columns:
@@ -174,6 +162,12 @@ def clean_airbnb_(filename):
     if 'host_hosting_duration' in df.columns:
         df['host_hosting_duration_months'] = df['host_hosting_duration'].apply(convert_to_months)
 
-    df.drop(columns=['Unnamed: 0_x','index','searched_location','title_bed_bats_review','host_confirmed_information','google_map_location_link','host_hosting_duration','title_bed_bats_review_copy','Unnamed: 0_y',  'cleaned_facilities'],inplace=True)
+    df.drop(columns=['Unnamed: 0_x','index','searched_location','title_bed_bats_review','host_confirmed_information','google_map_location_link','host_hosting_duration','title_bed_bats_review_copy','Unnamed: 0_y'],inplace=True)
 
-    return df,facilities_df
+    return df[['listing_link','base_urls','listing_title', 'listing_rating', 'bedrooms', 'beds',
+       'baths', 'latitude', 'longitude', 'price_per_night', 'review_count', 'review_count_link',
+       'listing_description','host_link','cleanliness_ratings', 'accuracy_ratings', 'check-in_ratings',
+       'communication_ratings', 'location_ratings', 'value_ratings', 'facilities',   
+       'host_name', 'host_rating', 'host_response_rate',
+       'host_no_of_review', 'Identity', 'Email address', 'Phone number', 'Work email', 'host_hosting_duration_months','host_no_of_listing', 'host_listing_links',
+       'host_about',]],facilities_df

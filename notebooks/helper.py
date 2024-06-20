@@ -62,26 +62,14 @@ def result_count_maker(string):
 def get_base_url(url):
     return url.split('?', 1)[0]
 
-# Function to map and filter facilities based on mapping dictionary
-def map_and_filter_facilities(facilities, mapping):
-        mapped = []
-        for facility in facilities:
-            # Convert facility to lowercase and check if it exists in the mapping
-            facility_lower = facility.lower()
-            if facility_lower in mapping:
-                mapped.append(mapping[facility_lower])
-        return mapped
 
-# Function to clean facilities string into a list
-def clean_facilities(facilities_str):
+
+def remove_unavailable(facilities):
+    if isinstance(facilities, str):
         try:
-            # Convert the string representation of list to an actual list
-            facilities = ast.literal_eval(facilities_str)
-            # Remove any "Unavailable" items
-            cleaned_facilities = [item for item in facilities if not item.startswith('Unavailable')]
-            return cleaned_facilities
-        except ValueError:  # Handle ValueError specifically for NaN
-            return []
-        except Exception as e:
-            print(f"Error processing: {facilities_str}, error: {e}")
-            return []
+            facilities_list = ast.literal_eval(facilities)
+            filtered_facilities = [facility for facility in facilities_list if not facility.startswith('Unavailable')]
+            return str(filtered_facilities)
+        except (ValueError, SyntaxError):
+            return facilities
+    return facilities
