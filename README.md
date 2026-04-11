@@ -1,70 +1,155 @@
 # Airbnb Market Analysis in Bangladesh
 
-This project explores the Airbnb market in Bangladesh by building a custom web scraping pipeline to collect listing, host, and review data directly from Airbnb. The goal was to turn a fragmented marketplace into a structured dataset that could be analyzed for pricing behavior, host patterns, guest experience, and short-term rental market dynamics.
+A client wanted to evaluate whether entering the Airbnb market in Bangladesh was commercially sensible, and if so, **where to enter, how to position a property, and what operating standard would be needed to compete**.
+
+This project answers that question by combining scraped Airbnb listing, host, and amenity data with secondary market research on demand drivers, rents, setup costs, seasonality, and legal considerations in Bangladesh. The result is a practical **market-entry and positioning study** for short-term rental investment.
 
 ## Why this project matters
 
-Airbnb listings contain rich information, but it is scattered across search pages, listing pages, host profiles, and reviews. This project brings those sources together into a single analysis-ready dataset to answer questions like:
+Most Airbnb analyses stop at descriptive dashboarding. This project goes further by framing the data from an investor's perspective:
 
-- How are listings priced across Bangladesh?
-- What amenities and listing features appear most often?
-- How concentrated is supply among hosts?
-- What host characteristics and review signals may influence guest perception?
+- Which division offers the strongest entry opportunity?
+- Where is the market deep enough to benchmark competitors?
+- What price position makes sense for a new listing?
+- What amenities are effectively mandatory?
+- How important are host responsiveness and operational quality?
+- What risks should be considered before committing capital?
 
-Rather than analyzing a few listings manually, I built a repeatable scraping workflow that captures market data at scale.
+Instead of browsing listings manually, this project turns fragmented marketplace data into a structured decision-support workflow.
 
-## Project impact
+## Project outcome
 
-This project produced a multi-source Airbnb dataset for Bangladesh by combining:
+The study found that **Dhaka is the strongest first-entry market** because it combines scale, review activity, strong ratings, and professional host behavior. **Chattogram** emerged as the best secondary market, while **Barisal** showed premium pricing but insufficient market depth for a high-confidence recommendation.
 
-- **1,578 host links** extracted from listing data
-- **879 host-level records** scraped from Airbnb host pages
-- **1,853 merged listing-host records**
-- **28 variables** in the merged dataset
-- **735 distinct host names** after consolidation
+### Key market signals from the dashboard
 
-These outputs made it possible to move from raw web pages to structured market analysis and host-level profiling.
+- **1,347 total listings**
+- **4,608 total reviews**
+- **$49.07 average nightly price**
+- **4.72 average listing rating**
+- **613 distinct hosts**
+- **206 superhosts**
+- **15.3% superhost proportion**
+
+### Division-level highlights
+
+#### Dhaka
+- **656 listings**
+- **4,206 reviews**
+- **$40.88 average price**
+- **4.74 average rating**
+- **95.75% average response rate**
+- Strongest combination of scale, traction, and host professionalism
+
+#### Chattogram
+- **317 listings**
+- **266 reviews**
+- **$62.57 average price**
+- **4.65 average rating**
+- **62.62% average response rate**
+- Higher pricing than Dhaka, but a smaller and less mature market
+
+#### Barisal
+- **52 listings**
+- **$121.00 average price**
+- **5.00 average rating**
+- **3 reviews**
+- Attractive on the surface, but too thin to support a strong investment recommendation
+
+#### Rajshahi
+- **67 listings**
+- **$33.00 average price**
+- **4.80 average rating**
+- Better suited to a value-oriented strategy than a premium one
 
 ## What I built
 
-I developed a Selenium-based scraping pipeline in Python that collects data in stages:
+I built this project in two layers:
 
-1. **Listing discovery**
-   - Searches Airbnb locations in Bangladesh
-   - Collects listing URLs across result pages
+### 1. Marketplace data pipeline
+A Selenium-based scraping workflow to collect:
 
-2. **Listing-level extraction**
-   - Price per night
-   - Review count and review links
-   - Host profile link
-   - Listing description
-   - Category-level ratings such as cleanliness, accuracy, communication, location, and value
-   - Google Maps location link
-   - Facilities and amenities
+- listing-level information
+- host-level information
+- review activity
+- amenities and facilities
+- pricing and ratings
+- division-wise comparisons
 
-3. **Host-level extraction**
-   - Host name
-   - Host rating
-   - Number of reviews
-   - Hosting duration
-   - Number of listings
-   - Host about section
-   - Confirmed host information
+### 2. Client advisory layer
+A market-entry report that combined dashboard evidence with secondary research on:
 
-4. **Review-level extraction**
-   - Reviewer name
-   - Reviewer profile link
-   - Review metadata
-   - Review text and extra rating context
+- Bangladesh short-term rental market context
+- city-level demand drivers
+- seasonality
+- monthly rent benchmarks
+- furnishing and setup cost ranges
+- operating cost structure
+- legal and tax considerations
+- pre-investment due diligence
 
-5. **Data merging**
-   - Joined listing and host data into a consolidated analysis dataset
+## Key insights
 
-The core scraping logic is implemented in `functions/scrap_main.py`, which contains functions for listing scraping, listing-detail extraction, host scraping, and review scraping.
+### 1. Dhaka is the best market for first entry
+Dhaka offers the deepest and most validated market. It has the largest listing base, strongest review volume, high ratings, and very strong host response behavior. For a new investor, this makes Dhaka the clearest benchmark market.
 
-## Technical approach
+### 2. Chattogram is the strongest alternative
+Chattogram has fewer listings but a higher average nightly price. It is still an active enough market to support a professionally managed entry strategy, especially for business-driven demand.
 
-The scraper is implemented with:
+### 3. Success depends on operations, not just the property
+The data suggests Airbnb performance is not only about owning a flat. Host responsiveness, consistency, and guest-readiness are major performance signals. Superhost share and response-rate patterns reinforce this.
+
+### 4. Amenities are part of the product
+The market strongly favors listings with practical convenience and comfort. High-frequency amenities include WiFi, free parking, air conditioning, fire safety, washers, refrigerators, and bathroom essentials.
+
+### 5. A mid-range, guest-ready strategy is stronger than a cheapest-price strategy
+In Dhaka especially, the most credible entry position is not a bare-minimum listing. A better strategy is a **fully equipped, professionally managed, mid-range property** targeted at business, medical, relocation, and longer-stay guests.
+
+## Secondary research added to the study
+
+To make the dashboard more useful for a client decision, I enriched the project with external market context, including:
+
+- Dhaka's business and expat demand structure
+- Chattogram's trade- and port-driven travel demand
+- Sylhet's diaspora- and tourism-led demand
+- seasonality patterns in Bangladesh tourism and travel
+- monthly rent ranges for Dhaka, Chattogram, and Sylhet
+- furnishing budget estimates for 2-bedroom and 3-bedroom apartments
+- operating cost benchmarks for self-managed vs managed units
+- Bangladesh legal and tax considerations for short-term rental hosting
+
+## Recommendation framework
+
+### Best first-entry market
+**Dhaka**
+
+### Best secondary market
+**Chattogram**
+
+### Premium but risky niche
+**Barisal**
+
+### Value-oriented market
+**Rajshahi**
+
+### Markets requiring more validation
+**Rangpur** and **Mymensingh**
+
+## Practical recommendation
+
+The strongest recommendation from this project is:
+
+> Enter Dhaka with a mid-range, fully equipped, professionally managed listing rather than trying to compete as the cheapest option.
+
+This recommendation is based on:
+- the largest observed market depth
+- highest review concentration
+- high guest ratings
+- strong host responsiveness
+- clear amenity expectations
+- the most benchmarkable competitive environment
+
+## Tools and technologies
 
 - **Python**
 - **Selenium**
@@ -73,36 +158,43 @@ The scraper is implemented with:
 - **Power BI**
 - **DAX**
 
-## Example analysis questions this dataset supports
+## What this project demonstrates
 
-- Which hosts control the largest share of listings?
-- How do listing ratings vary across properties?
-- What amenities are most common in the Bangladesh Airbnb market?
-- How do host experience and hosting duration relate to listing supply?
-- What can review data reveal about customer experience?
+This project shows my ability to:
 
+- build end-to-end web scraping pipelines
+- structure messy marketplace data into analysis-ready datasets
+- translate dashboard findings into business recommendations
+- connect quantitative analysis with qualitative market research
+- frame technical work as decision support for a client
+- turn descriptive analytics into an investor-facing strategy study
 
-## What I learned
+## Deliverables
 
-This project strengthened my ability to:
+This project produced:
 
-- build end-to-end scraping pipelines for dynamic websites
-- work with multi-step web extraction across listings, hosts, and reviews
-- clean and merge data from multiple scraped sources
-- design datasets for downstream market analysis
-- troubleshoot brittle scraping logic in changing page structures
+- an Airbnb scraping and analytics workflow
+- a multi-page Power BI dashboard
+- a division-by-division market comparison
+- a client advisory report
+- a market-entry and positioning recommendation for Bangladesh
 
+## Important limitation
 
-## Future improvements
+This project supports:
+- market selection
+- pricing position
+- amenity strategy
+- operational readiness
+- risk assessment
 
-- Refactor scraping modules into smaller files
-- Remove merge conflicts and duplicate functions
-- Add logging and error reporting
-- Parameterize locations and output paths
-- Build a dashboard on top of the merged dataset
-- Add sentiment analysis on reviews
+It does **not** fully estimate:
+- occupancy at property level
+- monthly revenue by specific unit
+- exact ROI
+- payback period
 
-## Authors
+## Author
 
-- [@Yeasirzawad](https://github.com/Yeasirzawad)
-- [@mominulislam2001](https://github.com/mominulislam2001)
+[@Yeasirzawad](https://github.com/Yeasirzawad)
+[@mominulislam2001](https://github.com/mominulislam2001)
