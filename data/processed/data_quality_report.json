@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-07-31T21:13:25.136183+00:00",
+  "row_counts": {
+    "total_listings": 1556,
+    "bd_division_listings": 1348,
+    "non_bd_division_listings": 208,
+    "total_facilities_rows": 1565,
+    "total_hosts": 849,
+    "hosts_with_multiple_listings": 193
+  },
+  "integrity": {
+    "duplicate_base_urls": 0,
+    "duplicate_host_links": 0,
+    "unparseable_bedrooms": 6,
+    "unparseable_beds": 6,
+    "unparseable_baths": 0,
+    "unparseable_listing_rating": 230
+  },
+  "completeness": {
+    "price_per_night": 0.5611,
+    "listing_rating": 0.3952,
+    "review_count": 1.0,
+    "host_rating": 0.5041
+  },
+  "division_breakdown": {
+    "Dhaka Division": 656,
+    "Chittagong": 318,
+    "West Bengal": 205,
+    "Sylhet Division": 158,
+    "Rajshahi Division": 67,
+    "Barisal Division": 52,
+    "Khulna Division": 52,
+    "Rangpur Division": 24,
+    "Mymensingh Division": 21,
+    "Tripura": 1,
+    "Koshi": 1,
+    "Meghalaya": 1
+  },
+  "notes": [
+    "listing_rating is expected to be missing for listings without enough reviews yet (Airbnb doesn't surface a rating until then) \u2014 not a defect.",
+    "non_bd_division_listings are reverse-geocoding noise near the Bangladesh border; kept in the data with is_bd_division=False rather than dropped.",
+    "unparseable_bedrooms/beds/baths/listing_rating come from the same fragile positional string-split on Airbnb's listing-card text (see clean.py:_parse_title_bed_bath docstring) \u2014 e.g. a 'New listing' badge lands in the rating position instead of a star rating. completeness.listing_rating counts non-null values, which is HIGHER than the count of genuinely numeric ratings; subtract unparseable_listing_rating for the true usable rate.",
+    "hosts_with_multiple_listings host_link appears >1 time in listings.csv (one host has 217) \u2014 this is why listings and hosts are kept as separate tables (Hosts 1 -> Listings Many) instead of one denormalized table."
+  ]
+}

@@ -1,0 +1,54 @@
+project:
+  name: airbnb-bangladesh
+  scrape_snapshot_date: "2024-07"
+
+paths:
+  raw:
+    listing_batches_dir: data/csvs
+    listing_batches_v2_dir: data/csvs_2
+    host_batches_dir: data/host_csvs
+    review_batches_dir: data/reviews_csvs
+    geocode_batches_dir: data/splited
+    district_links: data/links.csv
+    dhaka_neighborhood_links: data/links_Dhaka.csv
+    new_location_links: data/new_location_lins.csv
+    all_links: data/Main_Links_All.csv
+  interim:
+    merged_dir: data/merged
+    detailed_listings: data/detailed_listings.csv
+    all_unique_hosts: data/all_unique_hosts_info.csv
+    location_data: notebooks/location_data.csv
+    locality_backfill: data/interim/locality_backfill.csv
+  processed:
+    listings: final_data/listings.csv
+    hosts: final_data/hosts.csv
+    facilities: final_data/facilities.csv
+    reviews: data/processed/reviews.csv
+    data_quality_report: data/processed/data_quality_report.json
+    unresolved_localities: final_data/unresolved_localities.csv
+  scraping:
+    xpaths_file: xpaths/airbnb_xpaths.json
+
+# Divisions that are genuinely Bangladesh. Anything else in `principalSubdivision`
+# (West Bengal, Meghalaya, Tripura, Koshi, ...) is reverse-geocoding noise from
+# listings near the border and should be excluded from division-level analysis.
+divisions:
+  valid_bd_divisions:
+    - "Dhaka Division"
+    - "Chittagong"
+    - "Sylhet Division"
+    - "Rajshahi Division"
+    - "Barisal Division"
+    - "Khulna Division"
+    - "Rangpur Division"
+    - "Mymensingh Division"
+
+geocoding:
+  api_url: "https://api-bdc.io/graphql/reverse-geocoding"
+  api_key_env_var: "BDC_API_KEY"
+
+host_verification_badges:
+  - "Identity"
+  - "Email address"
+  - "Phone number"
+  - "Work email"

@@ -1,0 +1,6 @@
+pandas>=2.0
+numpy>=1.26
+PyYAML>=6.0
+requests>=2.31
+selenium>=4.20
+python-docx>=1.1
