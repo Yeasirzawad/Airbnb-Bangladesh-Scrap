@@ -15,6 +15,7 @@ from airbnb_pipeline.logging_setup import configure_logging
 from airbnb_pipeline.stages.clean import clean_listings, load_location_data
 from airbnb_pipeline.stages.geocode_backfill import apply_backfill, write_unresolved_localities
 from airbnb_pipeline.stages.merge import build_listings_and_hosts
+from airbnb_pipeline.stages.review_nlp import enrich_reviews
 from airbnb_pipeline.stages.reviews import load_and_clean_reviews
 from airbnb_pipeline.stages.validate import add_division_flag, build_data_quality_report, write_data_quality_report
 
@@ -57,8 +58,12 @@ def main() -> None:
 
     write_unresolved_localities(listings_df, cfg.valid_bd_divisions, cfg.path("processed.unresolved_localities"))
 
-    log.info("stage 4/4: reviews")
+    log.info("stage 4/5: reviews")
     reviews_df = load_and_clean_reviews(cfg)
+
+    log.info("stage 5/5: review NLP (sentiment + theme tags)")
+    reviews_df = enrich_reviews(reviews_df)
+
     reviews_out = cfg.path("processed.reviews")
     reviews_out.parent.mkdir(parents=True, exist_ok=True)
     reviews_df.to_csv(reviews_out, index=False)
